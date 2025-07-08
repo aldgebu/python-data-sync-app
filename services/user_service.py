@@ -1,8 +1,9 @@
 from flask_jwt_extended import create_access_token, create_refresh_token, decode_token
 
+from models.jwt.jwt_type_enum import JWTTypeEnum
+
 from dals.jwt_dal import TokenDAL
 from dals.user_dal import UserDAL
-from models.jwt.jwt_type_enum import JWTTypeEnum
 
 from schemas.user.user_login_schema import UserLoginSchema
 from schemas.user.user_creation_schema import UserCreationSchema
