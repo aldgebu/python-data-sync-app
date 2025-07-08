@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from models.general.env_type_enum import EnvTypeEnum
 
 
-load_dotenv(dotenv_path=".env.variables")
+load_dotenv()
 
 
 def get_database_uri(env_type: EnvTypeEnum):

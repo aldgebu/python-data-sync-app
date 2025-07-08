@@ -12,8 +12,6 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
     restart: always
-    env_file:
-      - .env.variables
 
   python-app:
     build: .
@@ -26,8 +24,6 @@ services:
     depends_on:
       - postgres
     restart: always
-    env_file:
-      - .env.variables
 
 volumes:
   postgres_data:
