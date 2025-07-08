@@ -36,5 +36,5 @@ class UserAuthView(MethodView):
         return self.user_service.logout(jwt=jwt, data=data), 200
 
 
-user_bp.add_url_rule('/auth', view_func=UserAuthView.as_view('user_login'))
-user_bp.add_url_rule('/create', view_func=UserRegistrationView.as_view('user_register'))
+user_bp.add_url_rule('/auth', view_func=UserAuthView.as_view('user_auth_view'))
+user_bp.add_url_rule('/create', view_func=UserRegistrationView.as_view('user_register_view'))
