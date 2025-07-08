@@ -36,4 +36,4 @@ def create_app() -> Flask:
 
 if __name__ == '__main__':
     app = create_app()
-    app.run(port=Config.APP_PORT_DOCKER)
+    app.run(host=Config.APP_HOST, port=Config.APP_PORT_DOCKER)
