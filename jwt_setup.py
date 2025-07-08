@@ -1,6 +1,7 @@
 from flask_jwt_extended import JWTManager
 
 from dals.jwt_dal import TokenDAL
+from dals.user_dal import UserDAL
 
 jwt = JWTManager()
 
@@ -25,7 +26,9 @@ def user_identity_loader(user):
 @jwt.user_lookup_loader
 def user_lookup_callback(_jwt_header, jwt_data):
     user_id = jwt_data['sub']
-    # TODO: return actual user
+    user_dal = UserDAL()
+
+    return user_dal.find(user_id=user_id)
 
 
 @jwt.unauthorized_loader
