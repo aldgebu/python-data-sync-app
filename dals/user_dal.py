@@ -13,7 +13,7 @@ class UserDAL(BaseDAL):
         self.user_model = UserModel
         self.db_session = DBSessionManager.get_session()
 
-    def find(self, email: Optional[str] = None, user_id: Optional[int] = None, get_all: Optional[bool] = False):
+    def find(self, user_id: Optional[int] = None, email: Optional[str] = None, get_all: Optional[bool] = False):
         query = self.db_session.query(self.user_model)
 
         if user_id:
