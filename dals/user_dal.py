@@ -1,3 +1,5 @@
+import bcrypt
+
 from typing import Optional
 
 from models.user import UserModel
@@ -22,3 +24,7 @@ class UserDAL(BaseDAL):
         if get_all:
             return query.all()
         return query.first()
+
+    @classmethod
+    def verify_password(cls, user_obj: UserModel, password: str) -> bool:
+        return bcrypt.checkpw(password.encode('utf-8'), user_obj.password.encode('utf-8'))

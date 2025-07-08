@@ -8,6 +8,10 @@ class UnKnownProblemException(InternalServerError):
         super().__init__("Unknown Problem")
 
 
+class RefreshTokenException(ValidationError):
+    def __init__(self):
+        super().__init__("Refresh Token expired")
+
 
 def general_exceptions(app: Flask):
     # we should log somewhere that this error happened but for demo project it would be enough I think
@@ -21,4 +25,8 @@ def general_exceptions(app: Flask):
 
     @app.errorhandler(ValidationError)
     def handle_validation_error(error):
+        return {"message": error.messages}, 400
+
+    @app.errorhandler(RefreshTokenException)
+    def handle_refresh_token_exception(error):
         return {"message": error.messages}, 400

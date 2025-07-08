@@ -28,6 +28,6 @@ class TokenDAL(BaseDAL):
 
     def clean_blocklist(self):
         utcnow = datetime.datetime.now(datetime.UTC)
-        self.session.query(self.JWTBlocklistModel).filter(and_(self.JWTBlocklistModel.token_type == 'access',
+        self.session.query(self.JWTBlocklistModel).filter(and_(self.JWTBlocklistModel.token_type == JWTTypeEnum.ACCESS,
                                                                self.JWTBlocklistModel.valid_until < utcnow)
                                                           ).delete()
