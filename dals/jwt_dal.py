@@ -12,22 +12,23 @@ from dals.base_dal import BaseDAL
 
 class TokenDAL(BaseDAL):
     def __init__(self):
-        self.JWTBlocklistModel = JWTBlocklist
+        self.jwt_blocklist_model = JWTBlocklist
         self.db_session = DBSessionManager.get_session()
 
     def create_blocklisted_token(self, jti: str, token_type: JWTTypeEnum, save_to_db: Optional[bool] = True):
-        token = self.JWTBlocklistModel(jti=jti, token_type=token_type)
+        token = self.jwt_blocklist_model(jti=jti, token_type=token_type)
 
         if save_to_db:
             self.save_to_db(token)
         return token
 
     def is_blocklisted(self, jti) -> bool:
-        token = self.db_session.query(self.JWTBlocklistModel).filter_by(jti=jti).first()
+        token = self.db_session.query(self.jwt_blocklist_model).filter_by(jti=jti).first()
         return token is not None
 
     def clean_blocklist(self):
         utcnow = datetime.datetime.now(datetime.UTC)
-        self.db_session.query(self.JWTBlocklistModel).filter(and_(self.JWTBlocklistModel.token_type == JWTTypeEnum.ACCESS,
-                                                                  self.JWTBlocklistModel.valid_until < utcnow)
-                                                             ).delete()
+        self.db_session.query(self.jwt_blocklist_model).filter(
+            and_(self.jwt_blocklist_model.token_type == JWTTypeEnum.ACCESS,
+                 self.jwt_blocklist_model.valid_until < utcnow)
+            ).delete()
