@@ -1,5 +1,7 @@
 from models.general.db import db
 
+from exceptions.general_exceptions import UnKnownProblemException
+
 
 class DBSessionManager:
     session = None
@@ -10,7 +12,7 @@ class DBSessionManager:
             cls.session = db.session
         except Exception as e:
             # log exception
-            pass
+            raise UnKnownProblemException()
 
     @classmethod
     def get_session(cls):
