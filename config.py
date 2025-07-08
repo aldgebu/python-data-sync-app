@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from models.general.env_type_enum import EnvTypeEnum
 
 
-load_dotenv()
+load_dotenv(dotenv_path=".env.variables")
 
 
 def get_database_uri(env_type: EnvTypeEnum):
@@ -22,6 +22,7 @@ def get_database_uri(env_type: EnvTypeEnum):
 class Config:
     DEBUG = False
 
+    APP_HOST = os.environ['APP_HOST']
     APP_PORT_DOCKER = os.environ['APP_PORT_DOCKER']
     ENV_TYPE = EnvTypeEnum(os.environ.get('ENV_TYPE', EnvTypeEnum.DEVELOPMENT.value))
 
