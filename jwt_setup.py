@@ -20,7 +20,7 @@ def check_if_token_revoked(_jwt_header, jwt_payload):
 
 @jwt.user_identity_loader
 def user_identity_loader(user):
-    return user.id
+    return str(user.id)
 
 
 @jwt.user_lookup_loader
