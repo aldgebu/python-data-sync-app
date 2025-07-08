@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_migrate import Migrate
 
+from jwt_setup import jwt
+from app_setup import app_setup
 from config import Config, ConfigManager
 
 from models.general.db import db
@@ -9,9 +11,6 @@ from schemas.ma import ma
 
 from blueprint_loader import load_blueprints
 
-from app_setup import app_setup
-
-from jwt_setup import jwt
 
 migrate = Migrate()
 
