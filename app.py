@@ -1,5 +1,4 @@
 from flask import Flask
-from flask_cors import CORS
 from flask_migrate import Migrate
 
 from config import Config, ConfigManager
@@ -22,7 +21,6 @@ def init_extensions(flask_app: Flask):
     migrate.init_app(flask_app, db)
     db.init_app(flask_app)
     jwt.init_app(flask_app)
-    CORS(app=flask_app, allowed_origins="*")
 
 
 def create_app() -> Flask:
