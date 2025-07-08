@@ -10,7 +10,7 @@ class UnKnownProblemException(InternalServerError):
 
 class RefreshTokenException(ValidationError):
     def __init__(self):
-        super().__init__("Refresh Token expired")
+        super().__init__("Not valid refresh token")
 
 
 def general_exceptions(app: Flask):
