@@ -1,0 +1,74 @@
+{
+  "paths": {
+    "/products/upload": {
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Upload Product File",
+        "description": "Uploads a CSV or XLSX file to update products.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Bearer access token",
+            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          },
+          {
+            "in": "formData",
+            "name": "file",
+            "type": "file",
+            "description": "CSV or XLSX file containing product data",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "File processed successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "updated successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid file or request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid file format"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "msg": {
+                  "type": "string",
+                  "example": "Token has been revoked"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

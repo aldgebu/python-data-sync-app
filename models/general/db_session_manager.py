@@ -22,7 +22,10 @@ class DBSessionManager:
         return cls.session
 
     @classmethod
-    def commit_session(cls):
+    def commit_session(cls) -> bool:
+        if not cls.session:
+            return True
+
         try:
             cls.session.commit()
         except Exception as e:
