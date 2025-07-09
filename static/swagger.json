@@ -14,6 +14,9 @@
     },
     "/user/auth": {
       "$ref": "swagger-user.json#/paths/~1user~1auth"
+    },
+    "/products/upload": {
+      "$ref": "swagger-products.json#/paths/~1products~1upload"
     }
   }
 }
