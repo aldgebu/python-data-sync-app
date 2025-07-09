@@ -2,7 +2,7 @@ from werkzeug.datastructures import FileStorage
 
 from utils.file_manager import FileManager
 
-from dals.products_dal import ProductDAL
+from dals.products_dal import ProductsDAL
 
 from schemas.products_schema import ProductsSchema
 
@@ -10,7 +10,7 @@ from schemas.products_schema import ProductsSchema
 class ProductsService:
     def __init__(self):
         self.file_manager = FileManager
-        self.products_dal = ProductDAL()
+        self.products_dal = ProductsDAL()
 
         self.products_schema = ProductsSchema()
 

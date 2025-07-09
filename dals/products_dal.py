@@ -6,7 +6,7 @@ from models.general.db_session_manager import DBSessionManager
 from dals.base_dal import BaseDAL
 
 
-class ProductDAL(BaseDAL):
+class ProductsDAL(BaseDAL):
     def __init__(self):
         self.db_session = DBSessionManager.get_session()
 
