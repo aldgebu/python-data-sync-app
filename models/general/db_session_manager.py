@@ -20,3 +20,10 @@ class DBSessionManager:
             cls.create_session()
 
         return cls.session
+
+    @classmethod
+    def commit_session(cls):
+        try:
+            cls.session.commit()
+        except Exception as e:
+            raise UnKnownProblemException()
