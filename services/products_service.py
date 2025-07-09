@@ -1,7 +1,10 @@
 from werkzeug.datastructures import FileStorage
 
-from dals.products_dal import ProductDAL
 from utils.file_manager import FileManager
+
+from dals.products_dal import ProductDAL
+
+from schemas.products_schema import ProductsSchema
 
 
 class ProductsService:
@@ -9,9 +12,12 @@ class ProductsService:
         self.file_manager = FileManager
         self.products_dal = ProductDAL()
 
+        self.products_schema = ProductsSchema()
+
     def update(self, file: FileStorage):
         products = []
         for row in self.file_manager.get_rows(file):
-            print(row)
+            products.append(self.products_schema.load(row))
 
+        self.products_dal.update(products=products)
         return {"message": "updated successfully"}
