@@ -32,13 +32,16 @@ class Config:
     JWT_REFRESH_TOKEN_LIFETIME = timedelta(hours=1)
     JWT_SECRET_KEY = os.environ['JWT_SECRET_KEY']
 
+    EXTERNAL_API_URL = os.environ['EXTERNAL_API_URL']
+    SYNC_INTERVAL_MINUTES = int(os.environ.get('SYNC_INTERVAL_MINUTES', 10))
+    EXTERNAL_API_RETRY_ATTEMPTS = int(os.environ.get('EXTERNAL_API_RETRY_ATTEMPTS', 5))
+
 
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = get_database_uri(EnvTypeEnum.PRODUCTION)
 
 
 class DevelopmentConfig(Config):
-    DEBUG = True
     SQLALCHEMY_DATABASE_URI = get_database_uri(EnvTypeEnum.DEVELOPMENT)
 
 

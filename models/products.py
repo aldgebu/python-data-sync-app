@@ -10,7 +10,7 @@ class Products(db.Model):
     price = db.Column(db.Float, nullable=False)
     name = db.Column(db.String(255), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
-    is_synced = db.Column(db.Boolean, nullable=False, default=False)
+    is_synced = db.Column(db.Boolean, nullable=False, default=False, onupdate=False)
     last_update = db.Column(
         db.DateTime,
         nullable=False,

@@ -5,6 +5,8 @@ from jwt_setup import jwt
 from app_setup import app_setup
 from config import Config, ConfigManager
 
+from scheduler.scheduler import init_scheduler
+
 from models.general.db import db
 
 from schemas.ma import ma
@@ -20,6 +22,8 @@ def init_extensions(flask_app: Flask):
     migrate.init_app(flask_app, db)
     db.init_app(flask_app)
     jwt.init_app(flask_app)
+
+    init_scheduler(app=flask_app)
 
 
 def create_app() -> Flask:
