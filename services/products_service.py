@@ -5,7 +5,8 @@ from utils.data_synchronizer import DataSynchronizer
 
 from dals.products_dal import ProductsDAL
 
-from schemas.products_schema import ProductsSchema
+from schemas.products.products_schema import ProductsSchema
+from schemas.products.products_file_schema import ProductsFileSchema
 
 
 class ProductsService:
@@ -16,8 +17,11 @@ class ProductsService:
         self.products_dal = ProductsDAL()
 
         self.products_schema = ProductsSchema()
+        self.products_file_schema = ProductsFileSchema()
 
     def update(self, file: FileStorage):
+        self.products_file_schema.load({'file_name': file.filename})
+
         products = []
         for row in self.file_manager.get_rows(file):
             products.append(self.products_schema.load(row))
