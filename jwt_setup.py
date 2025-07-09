@@ -12,9 +12,6 @@ def check_if_token_revoked(_jwt_header, jwt_payload):
     token_dal = TokenDAL()
 
     is_blocklisted = token_dal.is_blocklisted(jti)
-    if is_blocklisted:
-        print(f'Tried to use blocklisted {jti=}') # maybe to log somewhere
-
     return is_blocklisted
 
 
@@ -33,11 +30,9 @@ def user_lookup_callback(_jwt_header, jwt_data):
 
 @jwt.unauthorized_loader
 def unauthorized_callback(reason):
-    print("Missing Authorization Header") # should be logged actually
     return {"msg": reason}, 401
 
 
 @jwt.invalid_token_loader
 def invalid_token_callback(reason):
-    print("Invalid Authorization Header") # again and again
     return {"msg": reason}, 401
