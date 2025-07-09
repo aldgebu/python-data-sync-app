@@ -7,11 +7,18 @@ from models.general.db_session_manager import DBSessionManager
 
 class BaseDAL(ABC):
     @classmethod
-    def save_to_db(cls, entity, flush: Optional[bool] = False, commit: Optional[bool] = False):
+    def save_to_db(cls,
+                   entity,
+                   flush: Optional[bool] = False,
+                   commit: Optional[bool] = False,
+                   merge: Optional[bool] = False):
         db_session = DBSessionManager.get_session()
 
         try:
-            db_session.add(entity)
+            if merge:
+                db_session.merge(entity)
+            else:
+                db_session.add(entity)
             if flush:
                 db_session.flush()
             if commit:
