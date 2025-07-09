@@ -6,7 +6,6 @@ def retry(attempts: int):
         @wraps(func)
         def wrapper(*args, **kwargs):
             for i in range(attempts):
-                print(i)
                 try:
                     response = func(*args, **kwargs)
                     if response.status_code == 200:
