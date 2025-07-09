@@ -14,4 +14,4 @@ class ProductDAL(BaseDAL):
         for product in products:
             self.save_to_db(product, merge=True)
 
-        DBSessionManager.commit_session()
+        DBSessionManager.commit_session() # Better and faster to commit everything together
