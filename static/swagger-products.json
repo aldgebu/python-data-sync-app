@@ -50,7 +50,7 @@
               "properties": {
                 "message": {
                   "type": "string",
-                  "example": "Invalid file format"
+                  "example": "Only csv/xlsx files are accepted"
                 }
               }
             }
