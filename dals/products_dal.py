@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from models.products import Products
 from models.general.db_session_manager import DBSessionManager
@@ -14,4 +14,15 @@ class ProductsDAL(BaseDAL):
         for product in products:
             self.save_to_db(product, merge=True)
 
-        DBSessionManager.commit_session() # Better and faster to commit everything together
+    def find(self, is_synced: Optional[bool] = None) -> List[Products]:
+        query = self.db_session.query(Products)
+
+        if is_synced is not None:
+            query = query.filter_by(is_synced=is_synced)
+
+        return query.all()
+
+    def make_synchronized(self, products: List[Products]):
+        for product in products:
+            product.is_synced = True
+            self.save_to_db(product)
