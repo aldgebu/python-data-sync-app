@@ -6,8 +6,13 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 from config import Config
 
+from services.products_service import ProductsService
+
+
 def sync_data(app: Flask):
-    pass
+    with app.app_context():
+        products_service = ProductsService()
+        products_service.sync_products()
 
 
 def init_scheduler(app: Flask):
