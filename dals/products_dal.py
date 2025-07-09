@@ -26,3 +26,5 @@ class ProductsDAL(BaseDAL):
         for product in products:
             product.is_synced = True
             self.save_to_db(product)
+
+        DBSessionManager.commit_session()
