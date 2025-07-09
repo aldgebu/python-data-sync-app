@@ -18,7 +18,7 @@ def sync_data(app: Flask):
 def init_scheduler(app: Flask):
     scheduler = BackgroundScheduler()
 
-    scheduler.add_job(func=sync_data, args=[app], trigger=IntervalTrigger(seconds=Config.SYNC_INTERVAL_MINUTES))
+    scheduler.add_job(func=sync_data, args=[app], trigger=IntervalTrigger(minutes=Config.SYNC_INTERVAL_MINUTES))
 
     scheduler.start()
 
