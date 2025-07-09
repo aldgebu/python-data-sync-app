@@ -26,4 +26,7 @@ class DBSessionManager:
         try:
             cls.session.commit()
         except Exception as e:
-            raise UnKnownProblemException()
+            cls.session.rollback()
+            return False
+
+        return True
