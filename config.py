@@ -34,6 +34,7 @@ class Config:
 
     EXTERNAL_API_URL = os.environ['EXTERNAL_API_URL']
     SYNC_INTERVAL_MINUTES = os.environ.get('SYNC_INTERVAL_MINUTES', 10)
+    EXTERNAL_API_RETRY_ATTEMPTS = os.environ.get('EXTERNAL_API_RETRY_ATTEMPTS', 5)
 
 
 class ProductionConfig(Config):
