@@ -15,5 +15,5 @@ class Products(db.Model):
         db.DateTime,
         nullable=False,
         default=lambda: datetime.datetime.now(datetime.UTC),
-        onupdate=datetime.datetime.now(datetime.UTC),
+        onupdate=lambda: datetime.datetime.now(datetime.UTC),
     )
