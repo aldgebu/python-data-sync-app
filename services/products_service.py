@@ -34,5 +34,4 @@ class ProductsService:
 
         for product in unsynced_products:
             self.data_synchronizer.send_data(self.products_schema.dump(product))
-
-        self.products_dal.make_synchronized(products=unsynced_products)
+            self.products_dal.make_synchronized(product)

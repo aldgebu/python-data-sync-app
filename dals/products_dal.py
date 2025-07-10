@@ -1,15 +1,11 @@
 from typing import List, Optional
 
 from models.products import Products
-from models.general.db_session_manager import DBSessionManager
 
 from dals.base_dal import BaseDAL
 
 
 class ProductsDAL(BaseDAL):
-    def __init__(self):
-        self.db_session = DBSessionManager.get_session()
-
     def update(self, products: List[Products]):
         for product in products:
             self.save_to_db(product, merge=True)
@@ -22,9 +18,6 @@ class ProductsDAL(BaseDAL):
 
         return query.all()
 
-    def make_synchronized(self, products: List[Products]):
-        for product in products:
-            product.is_synced = True
-            self.save_to_db(product)
-
-        DBSessionManager.commit_session()
+    def make_synchronized(self, product: Products):
+        product.is_synced = True
+        self.save_to_db(product, commit=True)
