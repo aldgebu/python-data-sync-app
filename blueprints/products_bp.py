@@ -17,7 +17,7 @@ class UploadProductsView(MethodView):
     def post(self):
         file = request.files['file']
 
-        return self.products_service.update(file), 200
+        return self.products_service.update(file=file), 200
 
 
 products_bp.add_url_rule('/upload', view_func=UploadProductsView.as_view('upload_products_view'))

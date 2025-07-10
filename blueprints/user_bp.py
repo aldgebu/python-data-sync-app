@@ -16,7 +16,7 @@ class UserRegistrationView(MethodView):
     def post(self):
         data = request.get_json()
 
-        return self.user_service.create(data), 201
+        return self.user_service.create(data=data), 201
 
 
 class UserAuthView(MethodView):
