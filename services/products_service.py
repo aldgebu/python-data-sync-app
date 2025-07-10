@@ -1,14 +1,17 @@
 from werkzeug.datastructures import FileStorage
 
-from utils.file_manager import FileManager
-from utils.data_synchronizer import DataSynchronizer
-
 from dals.products_dal import ProductsDAL
 
 from schemas.products.products_schema import ProductsSchema
 from schemas.products.products_file_schema import ProductsFileSchema
 
+from utils.file_manager import FileManager
+from utils.data_synchronizer import DataSynchronizer
+from utils.decorators.for_methods.method_logger import method_logger
+from utils.decorators.for_classes.each_method_logger import decorate_each_method_with
 
+
+@decorate_each_method_with(method_decorator=method_logger)
 class ProductsService:
     def __init__(self):
         self.file_manager = FileManager

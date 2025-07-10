@@ -11,7 +11,11 @@ from schemas.user.user_creation_schema import UserCreationSchema
 from exceptions.general_exceptions import RefreshTokenException
 from exceptions.user_exceptions import EmailAlreadyInUseException, SuchUserNotFoundException
 
+from utils.decorators.for_methods.method_logger import method_logger
+from utils.decorators.for_classes.each_method_logger import decorate_each_method_with
 
+
+@decorate_each_method_with(method_decorator=method_logger)
 class UserService:
     def __init__(self):
         self.user_dal = UserDAL()
