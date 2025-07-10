@@ -25,7 +25,7 @@ class UserService:
         if self.user_dal.find(email=user.email) is not None:
             raise EmailAlreadyInUseException()
 
-        self.user_dal.save_to_db(user, commit=True)
+        self.user_dal.save_to_db(user, flush=True)
         return {'message': 'user created successfully!',
                 'user': self.user_creation_schema.dump(user)}
 
@@ -53,6 +53,6 @@ class UserService:
 
         jti = jwt['jti']
         access_token = self.token_dal.create_blocklisted_token(jti=jti, token_type=JWTTypeEnum.ACCESS)
-        self.token_dal.save_to_db(access_token, commit=True)
-        self.token_dal.save_to_db(refresh_token, commit=True)
+        self.token_dal.save_to_db(access_token, flush=True)
+        self.token_dal.save_to_db(refresh_token, flush=True) # Update access token
         return {"message": "Logout successfully!"}
