@@ -25,7 +25,7 @@ class HandlerManager:
     @classmethod
     def initialize_file_handler(cls, level: int, remove_others: bool = True):
         file_handler = logging.FileHandler(Config.LOG_FILE_NAME)
-        formatter = LogFormatter(fmt=Config.LOG_FORMAT) # TODO: check if work without getting format
+        formatter = LogFormatter(fmt=Config.LOG_FORMAT)
         log_filter = SensitiveDataFilter()
 
         cls.initialize_handler(handler=file_handler, formatter=formatter,
