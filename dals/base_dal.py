@@ -6,37 +6,42 @@ from models.general.db_session_manager import DBSessionManager
 
 
 class BaseDAL(ABC):
-    @classmethod
-    def save_to_db(cls,
+    def __init__(self):
+        self._db_session = None
+
+    @property
+    def db_session(self):
+        if self._db_session is None:
+            self._db_session = DBSessionManager.get_session()
+
+        return self._db_session
+
+    def save_to_db(self,
                    entity,
                    flush: Optional[bool] = False,
                    commit: Optional[bool] = False,
                    merge: Optional[bool] = False):
-        db_session = DBSessionManager.get_session()
-
         try:
             if merge:
-                db_session.merge(entity)
+                self.db_session.merge(entity)
             else:
-                db_session.add(entity)
+                self.db_session.add(entity)
+
             if flush:
-                db_session.flush()
+                self.db_session.flush()
             if commit:
-                db_session.commit()
+                self.db_session.commit()
         except Exception as e:
             print(e) #  actually we should log it somewhere
-            db_session.rollback()
+            self.db_session.rollback()
 
-    @classmethod
-    def remove_from_db(cls, entity, flush: Optional[bool] = False, commit: Optional[bool] = False):
-        db_session = DBSessionManager.get_session()
-
+    def remove_from_db(self, entity, flush: Optional[bool] = False, commit: Optional[bool] = False):
         try:
-            db_session.delete(entity)
+            self.db_session.delete(entity)
             if flush:
-                db_session.flush()
+                self.db_session.flush()
             if commit:
-                db_session.commit()
+                self.db_session.commit()
         except Exception as e:
             print(e) #  same here, we should log it somewhere
-            db_session.rollback()
+            self.db_session.rollback()
