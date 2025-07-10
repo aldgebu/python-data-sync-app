@@ -5,6 +5,7 @@ from flask_jwt_extended import jwt_required
 
 from services.products_service import ProductsService
 
+
 products_bp = Blueprint('products', __name__, url_prefix='/products')
 
 
