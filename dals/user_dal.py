@@ -11,7 +11,7 @@ from dals.base_dal import BaseDAL
 class UserDAL(BaseDAL):
     def __init__(self):
         self.user_model = UserModel
-        self.db_session = DBSessionManager.get_session()
+        super().__init__()
 
     def find(self, user_id: Optional[int] = None, email: Optional[str] = None, get_all: Optional[bool] = False):
         query = self.db_session.query(self.user_model)

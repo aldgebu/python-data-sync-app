@@ -13,7 +13,7 @@ from dals.base_dal import BaseDAL
 class TokenDAL(BaseDAL):
     def __init__(self):
         self.jwt_blocklist_model = JWTBlocklist
-        self.db_session = DBSessionManager.get_session()
+        super().__init__()
 
     def create_blocklisted_token(self, jti: str, token_type: JWTTypeEnum,
                                  save_to_db: Optional[bool] = True) -> JWTBlocklist:
