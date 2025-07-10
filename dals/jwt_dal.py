@@ -15,7 +15,8 @@ class TokenDAL(BaseDAL):
         self.jwt_blocklist_model = JWTBlocklist
         self.db_session = DBSessionManager.get_session()
 
-    def create_blocklisted_token(self, jti: str, token_type: JWTTypeEnum, save_to_db: Optional[bool] = True):
+    def create_blocklisted_token(self, jti: str, token_type: JWTTypeEnum,
+                                 save_to_db: Optional[bool] = True) -> JWTBlocklist:
         token = self.jwt_blocklist_model(jti=jti, token_type=token_type)
 
         if save_to_db:
