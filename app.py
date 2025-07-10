@@ -1,3 +1,5 @@
+import logging
+
 from flask import Flask
 from flask_migrate import Migrate
 
@@ -12,6 +14,9 @@ from models.general.db import db
 from schemas.ma import ma
 
 from blueprint_loader import load_blueprints
+
+from utils.logs.log_manager import LogManager
+from utils.logs.HandlerManager import HandlerManager
 
 
 migrate = Migrate()
@@ -29,6 +34,11 @@ def init_extensions(flask_app: Flask):
 def create_app() -> Flask:
     flask_app = Flask(__name__)
     flask_app.config.from_object(ConfigManager.get_config())
+
+    HandlerManager.initialize_file_handler(level=logging.INFO) # First Make file to write logs
+    LogManager.remove_all_handlers(app=flask_app) # Remove all default handlers
+    LogManager.initialize_app_logger(app_logger=flask_app.logger) # make app logger main logger
+    LogManager.configure_logging(level=logging.DEBUG, logger=LogManager.get_logger()) # setting logging level
 
     init_extensions(flask_app=flask_app)
     app_setup(app=flask_app)
