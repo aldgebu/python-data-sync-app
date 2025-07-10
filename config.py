@@ -36,6 +36,8 @@ class Config:
     SYNC_INTERVAL_MINUTES = int(os.environ.get('SYNC_INTERVAL_MINUTES', 10))
     EXTERNAL_API_RETRY_ATTEMPTS = int(os.environ.get('EXTERNAL_API_RETRY_ATTEMPTS', 5))
 
+    ALLOWED_FILE_EXTENSIONS = os.environ.get('ALLOWED_FILE_EXTENSIONS', '').split(',')
+
 
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = get_database_uri(EnvTypeEnum.PRODUCTION)
