@@ -5,7 +5,6 @@ from sqlalchemy import and_
 
 from models.jwt.jwt_type_enum import JWTTypeEnum
 from models.jwt.jwt_blocklist import JWTBlocklist
-from models.general.db_session_manager import DBSessionManager
 
 from dals.base_dal import BaseDAL
 
