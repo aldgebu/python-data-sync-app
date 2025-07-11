@@ -2,6 +2,8 @@ from models.general.db import db
 
 from exceptions.general_exceptions import UnKnownProblemException
 
+from utils.logs.log_manager import LogManager
+
 
 class DBSessionManager:
     session = None
@@ -10,8 +12,8 @@ class DBSessionManager:
     def create_session(cls):
         try:
             cls.session = db.session
-        except Exception as e:
-            # log exception
+        except Exception:
+            LogManager.get_logger().critical(msg='Error during db session creation', exc_info=True)
             raise UnKnownProblemException()
 
     @classmethod
@@ -28,8 +30,19 @@ class DBSessionManager:
 
         try:
             cls.session.commit()
-        except Exception as e:
+        except Exception:
+            LogManager.get_logger().critical(msg='Error during db session commit', exc_info=True)
             cls.session.rollback()
             return False
 
         return True
+
+    @classmethod
+    def close_session(cls):
+        try:
+            cls.session.close()
+        except Exception:
+            LogManager.get_logger().error(
+                msg='Error during closing session',
+                exc_info=True
+            )
