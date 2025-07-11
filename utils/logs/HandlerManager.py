@@ -1,5 +1,7 @@
 import logging
 
+from typing import Optional
+
 from config import Config
 from utils.logs.formatter import LogFormatter
 from utils.logs.log_manager import LogManager
@@ -13,7 +15,7 @@ class HandlerManager:
                            formatter: logging.Formatter,
                            log_filter: logging.Filter,
                            level: int,
-                           remove_others: bool):
+                           remove_others: Optional[bool] = False):
         handler.setLevel(level)
         handler.addFilter(log_filter)
         handler.setFormatter(formatter)
