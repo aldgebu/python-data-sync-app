@@ -8,8 +8,11 @@ from config import Config
 
 from services.products_service import ProductsService
 
+from utils.logs.log_manager import LogManager
+
 
 def sync_data(app: Flask):
+    LogManager.get_logger().debug('Data synchronization started')
     with app.app_context():
         products_service = ProductsService()
         products_service.sync_products()

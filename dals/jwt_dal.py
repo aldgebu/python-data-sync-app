@@ -5,7 +5,6 @@ from sqlalchemy import and_
 
 from models.jwt.jwt_type_enum import JWTTypeEnum
 from models.jwt.jwt_blocklist import JWTBlocklist
-from models.general.db_session_manager import DBSessionManager
 
 from dals.base_dal import BaseDAL
 
@@ -13,9 +12,10 @@ from dals.base_dal import BaseDAL
 class TokenDAL(BaseDAL):
     def __init__(self):
         self.jwt_blocklist_model = JWTBlocklist
-        self.db_session = DBSessionManager.get_session()
+        super().__init__()
 
-    def create_blocklisted_token(self, jti: str, token_type: JWTTypeEnum, save_to_db: Optional[bool] = True):
+    def create_blocklisted_token(self, jti: str, token_type: JWTTypeEnum,
+                                 save_to_db: Optional[bool] = True) -> JWTBlocklist:
         token = self.jwt_blocklist_model(jti=jti, token_type=token_type)
 
         if save_to_db:

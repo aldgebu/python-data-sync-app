@@ -4,39 +4,71 @@ from abc import ABC
 
 from models.general.db_session_manager import DBSessionManager
 
+from exceptions.general_exceptions import UnKnownProblemException
+
+from utils.logs.log_manager import LogManager
+
 
 class BaseDAL(ABC):
-    @classmethod
-    def save_to_db(cls,
+    def __init__(self):
+        self._db_session = None
+
+    @property
+    def db_session(self):
+        if self._db_session is None:
+            self._db_session = DBSessionManager.get_session()
+
+        return self._db_session
+
+    def save_to_db(self,
                    entity,
                    flush: Optional[bool] = False,
                    commit: Optional[bool] = False,
                    merge: Optional[bool] = False):
-        db_session = DBSessionManager.get_session()
-
         try:
             if merge:
-                db_session.merge(entity)
+                self.db_session.merge(entity)
             else:
-                db_session.add(entity)
+                self.db_session.add(entity)
+
             if flush:
-                db_session.flush()
+                self.db_session.flush()
             if commit:
-                db_session.commit()
-        except Exception as e:
-            print(e) #  actually we should log it somewhere
-            db_session.rollback()
+                self.db_session.commit()
+        except Exception:
+            LogManager.get_logger().critical(
+            f'Error during {BaseDAL.__name__}.{BaseDAL.save_to_db.__name__} : {entity}, flush={flush}, commit={commit}',
+                exc_info=True
+            )
+            try:
+                self.db_session.rollback()
+            except Exception:
+                LogManager.get_logger().critical(
+                    f'Error during {BaseDAL.__name__}.{BaseDAL.save_to_db.__name__} -> rollback : '
+                    f'{entity}, flush={flush}, commit={commit}',
+                    exc_info=True
+                )
+            raise UnKnownProblemException()
 
-    @classmethod
-    def remove_from_db(cls, entity, flush: Optional[bool] = False, commit: Optional[bool] = False):
-        db_session = DBSessionManager.get_session()
-
+    def remove_from_db(self, entity, flush: Optional[bool] = False, commit: Optional[bool] = False):
         try:
-            db_session.delete(entity)
+            self.db_session.delete(entity)
             if flush:
-                db_session.flush()
+                self.db_session.flush()
             if commit:
-                db_session.commit()
-        except Exception as e:
-            print(e) #  same here, we should log it somewhere
-            db_session.rollback()
+                self.db_session.commit()
+        except Exception:
+            LogManager.get_logger().critical(
+                f'Error during {BaseDAL.__name__}.{BaseDAL.remove_from_db.__name__} : '
+                f'{entity}, flush={flush}, commit={commit}',
+                exc_info=True
+            )
+            try:
+                self.db_session.rollback()
+            except Exception:
+                LogManager.get_logger().critical(
+                    f'Error during {BaseDAL.__name__}.{BaseDAL.remove_from_db.__name__} -> rollback : '
+                    f'{entity}, flush={flush}, commit={commit}',
+                    exc_info=True
+                )
+            raise UnKnownProblemException()

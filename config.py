@@ -32,9 +32,17 @@ class Config:
     JWT_REFRESH_TOKEN_LIFETIME = timedelta(hours=1)
     JWT_SECRET_KEY = os.environ['JWT_SECRET_KEY']
 
+    # External api
     EXTERNAL_API_URL = os.environ['EXTERNAL_API_URL']
     SYNC_INTERVAL_MINUTES = int(os.environ.get('SYNC_INTERVAL_MINUTES', 10))
     EXTERNAL_API_RETRY_ATTEMPTS = int(os.environ.get('EXTERNAL_API_RETRY_ATTEMPTS', 5))
+
+    # Logger
+    LOG_FORMAT = os.environ.get('LOG_FORMAT')
+    LOG_FILE_NAME = os.environ.get('LOG_FILE_NAME', 'logs.log')
+    SENSITIVE_DATA_LIST = os.environ.get('SENSITIVE_DATA_LIST', '').split(',')
+
+    ALLOWED_FILE_EXTENSIONS = os.environ.get('ALLOWED_FILE_EXTENSIONS', '').split(',')
 
 
 class ProductionConfig(Config):
