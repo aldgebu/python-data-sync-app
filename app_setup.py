@@ -1,7 +1,7 @@
-from flask import Flask, jsonify
+from flask import Flask
 
 from models.general.db import setup_db
-from models.general.db_session_manager import DBSessionManager
+
 
 from exceptions.initializer import initialize_exceptions
 
