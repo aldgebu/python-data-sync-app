@@ -5,6 +5,8 @@ from flask_jwt_extended import jwt_required, get_jwt
 
 from services.user_service import UserService
 
+from utils.decorators.for_methods.db_session_context import db_session_context
+
 
 user_bp = Blueprint('user', __name__, url_prefix='/user')
 
@@ -13,6 +15,7 @@ class UserRegistrationView(MethodView):
     def __init__(self):
         self.user_service = UserService()
 
+    @db_session_context
     def post(self):
         data = request.get_json()
 
@@ -23,11 +26,13 @@ class UserAuthView(MethodView):
     def __init__(self):
         self.user_service = UserService()
 
+    @db_session_context
     def post(self):
         data = request.get_json()
 
         return self.user_service.login(data=data), 201
 
+    @db_session_context
     @jwt_required()
     def delete(self):
         jwt = get_jwt()
