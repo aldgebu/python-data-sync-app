@@ -38,7 +38,7 @@ class DBSessionManager:
         return True
 
     @classmethod
-    def close_session(cls):
+    def close_and_remove_session(cls):
         try:
             cls.session.close()
         except Exception:
@@ -46,3 +46,5 @@ class DBSessionManager:
                 msg='Error during closing session',
                 exc_info=True
             )
+
+        cls.session = None
