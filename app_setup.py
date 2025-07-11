@@ -11,12 +11,3 @@ def app_setup(app: Flask):
         setup_db(app)
 
     initialize_exceptions(app)
-
-    @app.after_request
-    def after_request(response):
-        success =  DBSessionManager.commit_session()
-
-        if not success:
-            response = jsonify({"message": "Unknown Problem"})
-            response.status_code = 500
-        return response
