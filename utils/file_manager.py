@@ -17,7 +17,7 @@ class FileManager:
         if file_name.endswith(".csv"):
             df = pandas.read_csv(file.stream)
         elif file_name.endswith(".xlsx"):
-            df = pandas.read_excel(file.stream) # Better to FileReader classes for csv and xlsx
+            df = pandas.read_excel(file.stream) # Better to have FileReader classes for csv and xlsx
         else:
             raise ValueError("Unsupported file format")
 
