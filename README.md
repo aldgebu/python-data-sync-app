@@ -5,9 +5,7 @@ It uses Docker Compose for easy setup with a PostgreSQL database and a Python ba
 
 Quick Start:
 
-1. Clone the repository:
-git clone <your-repo-url>
-cd <your-project-directory>
+1. Clone the repository
 
 2. Start the app using Docker Compose:
 docker compose up
