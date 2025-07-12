@@ -6,8 +6,6 @@ services:
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_USER_PASSWORD}
       POSTGRES_DB: ${DEVELOPMENT_DATABASE_NAME}  # OK for development and demo projects :)
-    ports:
-      - "${DATABASE_PORT_LOCAL}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
