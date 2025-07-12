@@ -5,6 +5,8 @@ from flask_jwt_extended import jwt_required
 
 from services.products_service import ProductsService
 
+from utils.decorators.for_methods.db_session_context import db_session_context
+
 
 products_bp = Blueprint('products', __name__, url_prefix='/products')
 
@@ -13,6 +15,7 @@ class UploadProductsView(MethodView):
     def __init__(self):
         self.products_service = ProductsService()
 
+    @db_session_context
     @jwt_required()
     def post(self):
         file = request.files['file']
